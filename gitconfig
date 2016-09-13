@@ -1,0 +1,50 @@
+[core]
+	editor = gedit -w -s
+
+[user]
+	email = gustavohsborba@dri.cefetmg.br
+	name = Gustavo Borba
+
+[alias]
+	co = checkout
+	ci = commit
+	st = status
+	br = branch
+	cm = commit -m
+	aa = !git add -A && git st 
+	
+	bra = branch --all
+	cob = checkout -b
+	cof = !sh -c 'git checkout feature/$1' -
+	cma = !git aa && git cm $@ && git st
+	
+	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+	type = cat-file -t
+	dump = cat-file -p
+	hard = reset --hard
+	amend = commit --amend
+	update = !git co desenv && git pull --rebase --prune origin desenv
+	fetchp = fetch -p -u -v --progress origin
+	
+	fdiff = !git flow feature diff $@ --showcommands
+	flist = !git flow feature list -v $@ --showcommands
+	fpull = !git flow feature pull origin $@ --showcommands && git st
+	fstart = !git flow feature start -F $@ --showcommands && git st
+	ffinish = !git flow feature finish $@ --showcommands && git st
+	fpublish = !git flow feature publish $@ --showcommands && git st
+	fpub = fpublish
+	ffin = ffinish
+	fst = fstart
+	publishtag = !git push --follow-tags
+	
+	up = !git pull --rebase --prune origin $@ && git submodule update --init --recursive
+	undo = reset HEAD~1 --mixed
+	bclean = "!f() { git branch --merged ${1-prod} | grep -v " ${1-prod}$" | xargs -r git branch -d; }; f"
+    bdone = "!f() { git checkout ${1-prod} && git up && git bclean ${1-prod}; }; f"
+
+[merge]
+	tool = meld
+
+[push]
+	default = simple
+
